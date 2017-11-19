@@ -20,6 +20,21 @@ public class Rocket : MonoBehaviour {
     }
 
     void ProcessInput() {
+        HandleThrusting();
+        HandleRotation();
+    }
+
+    private void HandleRotation() {
+        rigidbody.freezeRotation = true;
+        if (Input.GetKey(KeyCode.A)) {
+            transform.Rotate(Vector3.forward);
+        } else if (Input.GetKey(KeyCode.D)) {
+            transform.Rotate(Vector3.back);
+        }
+        rigidbody.freezeRotation = false;
+    }
+
+    private void HandleThrusting() {
         if (Input.GetKey(KeyCode.Space)) {
             rigidbody.AddRelativeForce(Vector3.up);
             if (!audioSource.isPlaying) {
@@ -27,11 +42,6 @@ public class Rocket : MonoBehaviour {
             }
         } else {
             audioSource.Stop();
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            transform.Rotate(Vector3.forward);
-        } else if (Input.GetKey(KeyCode.D)) {
-            transform.Rotate(Vector3.back);
         }
     }
 }
